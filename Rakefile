@@ -1,6 +1,13 @@
-# Add your own tasks in files placed in lib/tasks ending in .rake,
-# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
-
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+task seed: :environment do
+  User.delete_all
+  10_000.times do
+    User.create(
+      name: Faker::Name.name_with_middle,
+      age: rand(100)
+    )
+  end
+end
